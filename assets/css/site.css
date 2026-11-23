@@ -183,3 +183,5 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .card .frame img.laurel{top:14px;right:14px;width:clamp(96px,28%,150px)}
 .card:hover .frame img.laurel{transform:none}
 @media (max-width:700px){.reel img.laurel{width:96px;top:14px;right:14px}}
+.card .frame img.laurel-award{top:10px;right:10px;width:clamp(110px,32%,170px)}
+@media (max-width:900px){.card .frame img.laurel-award{right:auto;left:10px;width:30%;filter:drop-shadow(0 0 10px rgba(0,0,0,.85)) drop-shadow(0 0 22px rgba(0,0,0,.6))}}

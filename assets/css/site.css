@@ -171,3 +171,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .vitem p{margin:0;font-size:15px;line-height:1.55;color:var(--mute)}
 @media (max-width:1000px){.vgrid.three{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:700px){.vgrid,.vgrid.three{grid-template-columns:1fr;gap:48px}.vitem .row{flex-direction:column;gap:6px}.vitem .mono{text-align:left}}
+
+/* email copied toast */
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:14px 20px;font-size:12px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:20;max-width:calc(100vw - 32px)}
+.toast.on{opacity:1;transform:translate(-50%,0)}

@@ -330,3 +330,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .about-a .stats span{display:block;margin-top:10px;font-size:11px;color:var(--dim)}
 @media (max-width:900px){.about.about-a{grid-template-columns:1fr;row-gap:36px}.about-a .headshot{max-width:420px}}
 @media (max-width:480px){.about-a .stats{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:16px}.about-a .stats span{font-size:9px}}
+.vgrid .player img.laurel.laurel-2{right:calc(30% + 20px)}
+.vgrid .player:has(.laurel-2) img.laurel{width:23%}
+.vgrid .player img.laurel.laurel-2{right:calc(23% + 18px)}

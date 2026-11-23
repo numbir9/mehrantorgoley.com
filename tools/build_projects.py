@@ -103,6 +103,15 @@ def icon(key):
     return f'<svg class="wicon" viewBox="0 0 24 24" aria-hidden="true"><path d="{ICONS[key]}" fill="currentColor"/></svg>'
 
 
+SECTION = {'Feature': '/features/', 'Short film': '/shorts/', 'Music video': '/music-videos/'}
+
+
+def nav(p=None, current=None):
+    cur = current or (SECTION.get(p['kind']) if p else None)
+    links = [('/#work', 'Work'), ('/features/', 'Features'), ('/shorts/', 'Shorts'), ('/music-videos/', 'Music videos'), ('/#about', 'About'), ('/contact/', 'Contact')]
+    return ''.join(f'<a href="{h}"{" aria-current=\"page\"" if h == cur else ""}>{t}</a>' for h, t in links)
+
+
 def meta_line(p):
     bits = [p['kind']]
     if p.get('artist'): bits.append(p['artist'])
@@ -169,7 +178,7 @@ def page(p, nxt):
   <a class="brand" href="/">MEHRAN C. TORGOLEY</a>
   <button class="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
   <nav class="nav" id="nav">
-    <a href="/#work">Work</a><a href="/shorts/">Shorts</a><a href="/music-videos/">Music videos</a><a href="/#about">About</a><a href="/contact/">Contact</a>
+    {nav(p)}
   </nav>
 </header>
 
@@ -234,10 +243,90 @@ def carousel():
             '  </div>')
 
 
+
+def features_page():
+    feats = [p for p in PROJECTS if p['kind'] == 'Feature']
+    order = ['curse-of-aurore', 'izzy-lyon', 'golden']
+    feats.sort(key=lambda p: order.index(p['slug']) if p['slug'] in order else 99)
+    rows = []
+    for i, p in enumerate(feats):
+        honors = ''.join(f'<li>{E(h)}</li>' for h in p['honors'])
+        honors = f'<ul class="laurels mono">{honors}</ul>' if honors else ''
+        cta = 'Watch the trailer' if p.get('video_label') == 'Official trailer' else 'Watch'
+        wl = ' · '.join(n for n, *_ in p['watch'][:4])
+        where = f'<p class="fwhere mono">Streaming on {E(wl)}</p>' if wl else (f'<p class="fwhere mono">{E(p["status"])}</p>' if p.get('status') else '')
+        rows.append(f'''    <article class="feature-row reveal">
+      <a class="fstill" href="/work/{p['slug']}/" aria-label="{E(p['title'])}"><img src="/assets/img/{p['still']}" alt="{E(p['alt'])}" loading="{'eager' if i == 0 else 'lazy'}" style="object-position:{p['pos']}">{laurel_for(p)}</a>
+      <div class="ftext">
+        <span class="mono fnum">{i + 1:02d} — {E(p['year'])}</span>
+        <h2 class="display"><a href="/work/{p['slug']}/">{E(p['title']).replace(': ', ':<br>')}</a></h2>
+        <p class="logline">{E(p['logline'])}</p>
+        <p class="credit mono">{E(p['credit'])}</p>
+        {honors}
+        {where}
+        <a class="btn" href="/work/{p['slug']}/">{cta} <span class="arrow">→</span></a>
+      </div>
+    </article>''')
+    body = '\n'.join(rows)
+    return f'''<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feature Films — Mehran C. Torgoley</title>
+<meta name="description" content="Feature films directed by Mehran C. Torgoley: Curse of Aurore, Izzy Lyon: The Unspun Truth and Golden.">
+<link rel="canonical" href="https://mehrantorgoley.com/features/">
+<meta property="og:title" content="Feature Films — Mehran C. Torgoley">
+<meta property="og:image" content="https://mehrantorgoley.com/assets/img/golden-doorway-og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0B0B0B">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <a class="brand" href="/">MEHRAN C. TORGOLEY</a>
+  <button class="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+  <nav class="nav" id="nav">
+    {nav(current='/features/')}
+  </nav>
+</header>
+
+<main id="main">
+  <section class="page-head">
+    <h1 class="display"><span class="mask"><span>Feature <span class="outline">films</span></span></span></h1>
+    <span class="mono">{len(feats):02d} features</span>
+  </section>
+
+  <section class="wrap features-list">
+{body}
+  </section>
+</main>
+
+<footer class="contact" id="contact">
+  <a class="big display" href="/contact/" style="font-size:clamp(56px,6.6vw,96px)">Let’s make<br>something <span class="arrow">→</span></a>
+  <div class="foot">
+    <a class="mail" href="mailto:hello@mehrantorgoley.com">hello@mehrantorgoley.com</a>
+    <span class="mono" data-clock>California</span>
+    <span class="links"><a href="https://www.imdb.com/name/nm1977604/" rel="noopener">IMDb</a><a href="https://vimeo.com/numbir9" rel="noopener">Vimeo</a></span>
+  </div>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+</body>
+</html>
+'''
+
+
 def main():
     for i, p in enumerate(PROJECTS):
         d = os.path.join(ROOT, 'work', p['slug']); os.makedirs(d, exist_ok=True)
         open(os.path.join(d, 'index.html'), 'w').write(page(p, PROJECTS[(i + 1) % len(PROJECTS)]))
+    os.makedirs(os.path.join(ROOT, 'features'), exist_ok=True)
+    open(os.path.join(ROOT, 'features', 'index.html'), 'w').write(features_page())
     idx = os.path.join(ROOT, 'index.html'); s = open(idx).read()
     s2 = re.sub(r'  <div class="reel[^"]*"[^>]*>.*?\n  </div>(?=\n)', lambda m: carousel(), s, count=1, flags=re.S)
     assert s2 != s or 'class="reel carousel"' in s, 'carousel anchor not found'

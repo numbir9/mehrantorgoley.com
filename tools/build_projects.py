@@ -12,6 +12,7 @@ ICONS = json.load(open(os.path.join(ROOT, 'tools', 'icons.json')))
 LAUREL_SEL = '<img class="laurel" src="/assets/img/laurel-nyciff-2026.png" alt="Official Selection, New York City Independent Film Festival 2026" width="800" height="518">'
 LAUREL_RH = '<img class="laurel laurel-rh" src="/assets/img/laurel-ravenheart-2022.png" alt="Official Selection, Ravenheart International Film Festival 2022" width="600" height="351">'
 LAUREL_FM = '<img class="laurel" src="/assets/img/laurel-filmocracy-2020.png" alt="Official Selection, Filmocracy Fest 2020" width="600" height="389">'
+LAUREL_LF10 = '<img class="laurel" src="/assets/img/laurel-litchfield-2010.png" alt="Official Selection, Litchfield Hills Film Festival 2010" width="600" height="480">'
 LAUREL_ACT = '<img class="laurel laurel-award" src="/assets/img/laurel-nyciff-2026-best-actress.png" alt="Winner, Best Actress — Leah Eckardt, New York City Independent Film Festival 2026" width="401" height="348">'
 
 # watch: (label, icon key, url, note)
@@ -56,11 +57,11 @@ PROJECTS = [
                 ('Google Play', 'googleplay', 'https://play.google.com/store/movies/details/Izzy_Lyon_The_Unspun_Truth?id=9gRKfwoQwcA.P', 'Rent or buy'),
                 ('Fandango at Home', 'fandango', 'https://athome.fandango.com/content/browse/details/Izzy-Lyon-The-Unspun-Truth/2129462', 'Free with ads · rent or buy')]),
     dict(slug='room-enough', title='Room Enough', kind='Short film', year='2010',
-         still='room-enough.jpg', pos='30% 50%',
+         still='room-enough.jpg', pos='30% 50%', laurel='lf10',
          alt='Room Enough — a bare bulb on a pull chain in a dark room',
          logline='Watching a clone with his exact memories—and none of his baggage—publish his book and live his life better than he ever could, a burnt-out diner worker confronts the quiet sting of becoming obsolete in his own skin.',
          credit='Written, directed and edited by Mehran C. Torgoley · Inspired by a story by Isaac Marion',
-         honors=[], video=('yt', 'cFR2GDF-agg'), video_label='Full film',
+         honors=['Official Selection — Litchfield Hills Film Festival 2010'], video=('yt', 'cFR2GDF-agg'), video_label='Full film',
          watch=[('YouTube', 'youtube', 'https://www.youtube.com/watch?v=cFR2GDF-agg', 'Free')]),
     dict(slug='dirty-laundry', title='Dirty Laundry', kind='Short film', year='2013',
          still='dirty-laundry.jpg', pos='50% 50%',
@@ -120,7 +121,7 @@ def meta_line(p):
 
 
 def laurel_for(p):
-    return {'sel': LAUREL_SEL, 'act': LAUREL_ACT, 'rh': LAUREL_RH, 'fm': LAUREL_FM}.get(p.get('laurel'), '')
+    return {'sel': LAUREL_SEL, 'act': LAUREL_ACT, 'rh': LAUREL_RH, 'fm': LAUREL_FM, 'lf10': LAUREL_LF10}.get(p.get('laurel'), '')
 
 
 def page(p, nxt):

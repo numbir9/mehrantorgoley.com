@@ -289,3 +289,4 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 @media (max-width:900px){.about .about-side{grid-column:1/-1}.headshot{max-width:360px}}
 .vgrid .player img.laurel{width:30%;top:12px;right:12px}
 .vitem .laurels{margin-top:16px;align-items:stretch;text-align:left}.vitem .laurels li{text-align:left}
+.vgrid .player img.laurel{top:auto;bottom:12px;right:12px}

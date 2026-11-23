@@ -67,9 +67,17 @@
 
     <aside class="direct">
       <p class="mono">Rather use your own email?</p>
-      <a class="btn" href="mailto:hello@mehrantorgoley.com?subject=Project%20inquiry">Email me directly</a>
+      <div class="picker">
+        <button class="btn picker-btn" type="button" aria-expanded="false" aria-controls="picker-menu">Email me directly <span class="arrow" aria-hidden="true">↓</span></button>
+        <ul class="picker-menu" id="picker-menu" hidden>
+          <li><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=hello@mehrantorgoley.com&amp;su=Project%20inquiry" target="_blank" rel="noopener">Gmail <span>↗</span></a></li>
+          <li><a href="https://outlook.office.com/mail/deeplink/compose?to=hello@mehrantorgoley.com&amp;subject=Project%20inquiry" target="_blank" rel="noopener">Outlook <span>↗</span></a></li>
+          <li><a href="https://compose.mail.yahoo.com/?to=hello@mehrantorgoley.com&amp;subject=Project%20inquiry" target="_blank" rel="noopener">Yahoo Mail <span>↗</span></a></li>
+          <li><a href="mailto:hello@mehrantorgoley.com?subject=Project%20inquiry" data-nocopy>Mail app on this device <span>↗</span></a></li>
+          <li><button type="button" class="copy-addr">Copy address <span>⧉</span></button></li>
+        </ul>
+      </div>
       <p class="alt"><a class="mail" href="mailto:hello@mehrantorgoley.com">hello@mehrantorgoley.com</a></p>
-      <p class="alt mono"><a href="https://mail.google.com/mail/?view=cm&amp;to=hello@mehrantorgoley.com&amp;su=Project%20inquiry" target="_blank" rel="noopener">Open in Gmail ↗</a></p>
     </aside>
   </section>
 </main>

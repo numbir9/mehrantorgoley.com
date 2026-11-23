@@ -59,7 +59,7 @@
     clearTimeout(toast._t);
     toast._t = setTimeout(function () { toast.classList.remove('on'); }, 3200);
   }
-  document.querySelectorAll('a[href^="mailto:"]').forEach(function (a) {
+  document.querySelectorAll('a[href^="mailto:"]:not([data-nocopy])').forEach(function (a) {
     a.addEventListener('click', function () {
       var addr = a.getAttribute('href').replace('mailto:', '').split('?')[0];
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -107,6 +107,23 @@
           status.innerHTML = 'That didn’t go through. Please use <a class="mail" href="mailto:hello@mehrantorgoley.com">email</a> instead.';
         });
     });
+  }
+
+  // "Email me directly" chooser: webmail, device mail app, or copy.
+  var pk = document.querySelector('.picker');
+  if (pk) {
+    var pb = pk.querySelector('.picker-btn'), pm = pk.querySelector('.picker-menu');
+    var setOpen = function (o) { pm.hidden = !o; pb.setAttribute('aria-expanded', o); pk.classList.toggle('open', o); };
+    pb.addEventListener('click', function (e) { e.stopPropagation(); setOpen(pm.hidden); });
+    document.addEventListener('click', function (e) { if (!pk.contains(e.target)) setOpen(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+    pk.querySelector('.copy-addr').addEventListener('click', function () {
+      var addr = 'hello@mehrantorgoley.com';
+      var ok = function () { showToast('Copied — ' + addr); setOpen(false); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(addr).then(ok, function () { showToast(addr); });
+      else showToast(addr);
+    });
+    pm.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
   }
 
   // Click-to-play embeds: nothing loads from YouTube or Vimeo until someone presses play.

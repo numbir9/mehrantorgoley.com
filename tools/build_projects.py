@@ -11,6 +11,7 @@ ICONS = json.load(open(os.path.join(ROOT, 'tools', 'icons.json')))
 
 LAUREL_SEL = '<img class="laurel" src="/assets/img/laurel-nyciff-2026.png" alt="Official Selection, New York City Independent Film Festival 2026" width="800" height="518">'
 LAUREL_RH = '<img class="laurel laurel-rh" src="/assets/img/laurel-ravenheart-2022.png" alt="Official Selection, Ravenheart International Film Festival 2022" width="600" height="351">'
+LAUREL_FM = '<img class="laurel" src="/assets/img/laurel-filmocracy-2020.png" alt="Official Selection, Filmocracy Fest 2020" width="600" height="389">'
 LAUREL_ACT = '<img class="laurel laurel-award" src="/assets/img/laurel-nyciff-2026-best-actress.png" alt="Winner, Best Actress — Leah Eckardt, New York City Independent Film Festival 2026" width="401" height="348">'
 
 # watch: (label, icon key, url, note)
@@ -42,11 +43,11 @@ PROJECTS = [
                 ('Fandango at Home', 'fandango', 'https://athome.fandango.com/content/browse/details/Curse-of-Aurore/1546925', 'Free with ads · rent or buy'),
                 ('Hoopla', 'generic', 'https://www.hoopladigital.com/title/13903883', 'Free with a library card')]),
     dict(slug='izzy-lyon', title='Izzy Lyon: The Unspun Truth', short='Izzy Lyon', kind='Feature', year='2022',
-         still='izzy-lyon.jpg', pos='50% 40%',
+         still='izzy-lyon.jpg', pos='50% 40%', laurel='fm',
          alt='Izzy Lyon — Phil LaMarr and his puppet in matching pink shirts',
          logline='Twenty years after the world’s greatest sign spinner vanished, his most devoted fans band together to restore his legacy.',
          credit='Directed by Mehran C. Torgoley & Dan Lanigan · Mockumentary · With Phil LaMarr, David Koechner, Greg Proops · Octane Multimedia',
-         honors=[],
+         honors=['Official Selection — Filmocracy Fest 2020'],
          video=('yt', '8bKuW3BRQKg'), video_label='Official trailer',
          watch=[('Prime Video', 'generic', 'https://watch.amazon.com/detail?gti=amzn1.dv.gti.017d2ef2-9e5a-4c53-93f0-a27403da2dc5', 'Included with Prime · rent or buy'),
                 ('Tubi', 'tubi', 'https://tubitv.com/movies/100003313', 'Free with ads'),
@@ -110,7 +111,7 @@ def meta_line(p):
 
 
 def laurel_for(p):
-    return {'sel': LAUREL_SEL, 'act': LAUREL_ACT, 'rh': LAUREL_RH}.get(p.get('laurel'), '')
+    return {'sel': LAUREL_SEL, 'act': LAUREL_ACT, 'rh': LAUREL_RH, 'fm': LAUREL_FM}.get(p.get('laurel'), '')
 
 
 def page(p, nxt):

@@ -32,7 +32,7 @@ PROJECTS = [
          logline='A thumb drive from the dark web holds the last footage of three American filmmakers who went to rural Quebec to research a century-old child murder.',
          credit='Directed by Mehran C. Torgoley · Found-footage horror · Freestyle Digital Media',
          honors=['Official Selection — Ravenheart International Film Festival 2022',
-                 'Winner — Best Actress, Llana Barron',
+                 'Winner — Best Actress, Llana Barron — Ravenheart 2022',
                  'Opened #1 at Cinémas Guzzo, Quebec'],
          video=('yt', '_koawiiqMwI'), video_label='Official trailer',
          watch=[('Prime Video', 'generic', 'https://watch.amazon.com/detail?gti=amzn1.dv.gti.42bb2662-0fc9-f78a-24e5-07cf8e0f9942', 'Included with Prime · rent or buy'),

@@ -319,3 +319,14 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 @media (max-width:700px){.ptag{font-size:9px;padding:5px 9px 5px 10px}.carousel .slide .ptag{bottom:44px;padding-left:16px}}
 .carousel::after{display:none}
 .carousel .slide::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(to top,rgba(0,0,0,.55),transparent);z-index:2;pointer-events:none}
+
+/* About — option A (tight split + stats) */
+.about.about-a{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:clamp(40px,5vw,80px);align-items:center;max-width:1240px}
+.about-a .headshot{margin:0;max-width:none;width:100%}
+.about-a .about-body h2{margin:0 0 28px;font-size:clamp(48px,5vw,80px)}
+.about-a .copy{grid-column:auto;font-size:clamp(17px,1.4vw,20px);line-height:1.65;color:var(--mute)}
+.about-a .stats{list-style:none;margin:36px 0 0;padding:28px 0 0;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,auto);justify-content:start;column-gap:clamp(32px,5vw,72px);row-gap:20px}
+.about-a .stats b{display:block;font-family:var(--display);font-weight:400;font-size:clamp(40px,4vw,56px);line-height:1;color:var(--ink)}
+.about-a .stats span{display:block;margin-top:10px;font-size:11px;color:var(--dim)}
+@media (max-width:900px){.about.about-a{grid-template-columns:1fr;row-gap:36px}.about-a .headshot{max-width:420px}}
+@media (max-width:480px){.about-a .stats{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:16px}.about-a .stats span{font-size:9px}}

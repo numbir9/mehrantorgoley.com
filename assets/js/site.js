@@ -44,6 +44,34 @@
   }
   if (clocks.length) { tick(); setInterval(tick, 5000); }
 
+  // Email links: many browsers have no mail app set up, so a mailto: click can do nothing.
+  // Copy the address too, and say so.
+  var toast;
+  function showToast(msg) {
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.className = 'toast mono';
+      toast.setAttribute('role', 'status');
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.classList.add('on');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () { toast.classList.remove('on'); }, 3200);
+  }
+  document.querySelectorAll('a[href^="mailto:"]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var addr = a.getAttribute('href').replace('mailto:', '').split('?')[0];
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(addr).then(function () {
+          showToast('Copied — ' + addr);
+        }, function () { showToast(addr); });
+      } else {
+        showToast(addr);
+      }
+    });
+  });
+
   // Click-to-play embeds: nothing loads from YouTube or Vimeo until someone presses play.
   function mount(player, html) {
     player.innerHTML = html;

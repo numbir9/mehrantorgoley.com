@@ -223,24 +223,21 @@
     if (!pick()) start();
   }
 
-  // Homepage featured-short band: shows the next short on every page load.
+  // Homepage featured band: shows the next project (any category) on every page load.
   var fs = document.querySelector('.featured-short[data-fs]'), fsd = document.getElementById('fs-data');
   if (fs && fsd) {
     try {
       var list = JSON.parse(fsd.textContent), n = 0;
-      try { n = (parseInt(localStorage.getItem('mct_fs'), 10) + 1) || 0; } catch (e) { n = Math.floor(Math.random() * list.length); }
+      try { n = (parseInt(localStorage.getItem('mct_fs2'), 10) + 1) || 0; } catch (e) { n = Math.floor(Math.random() * list.length); }
       n = n % list.length;
-      try { localStorage.setItem('mct_fs', n); } catch (e) {}
+      try { localStorage.setItem('mct_fs2', n); } catch (e) {}
       var d = list[n];
-      if (n !== 0) {
-        fs.setAttribute('href', '/shorts/#' + d.slug);
-        var honors = d.honors.length ? '<ul class="laurels mono">' + d.honors.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' : '';
-        fs.querySelector('.frame').innerHTML = '<img src="' + d.img + '" alt="' + d.alt + '" loading="lazy" style="object-position:' + d.pos + '">' + d.laurel + '<span class="ptag">Short Film</span>';
-        var t = fs.querySelector('.txt');
-        t.innerHTML = '<span class="mono" style="font-size:13px;color:var(--dim)">Featured short — ' + d.year + '</span>' +
-          '<span class="ttl display">' + d.title + '</span><p>' + d.log + '</p>' + honors +
-          '<span class="mono" style="font-size:13px;color:var(--accent)">Watch the film →</span>';
-      }
+      fs.setAttribute('href', d.href);
+      var honors = d.honors.length ? '<ul class="laurels mono">' + d.honors.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' : '';
+      fs.querySelector('.frame').innerHTML = '<img src="' + d.img + '" alt="' + d.alt + '" loading="lazy" style="object-position:' + d.pos + '">' + d.laurel + '<span class="ptag">' + d.tag + '</span>';
+      fs.querySelector('.txt').innerHTML = '<span class="mono" style="font-size:13px;color:var(--dim)">Featured — ' + d.meta + '</span>' +
+        '<span class="ttl display">' + d.title + '</span>' + (d.log ? '<p>' + d.log + '</p>' : '') + honors +
+        '<span class="mono" style="font-size:13px;color:var(--accent)">' + d.cta + ' →</span>';
     } catch (e) {}
   }
 

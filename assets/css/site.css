@@ -341,3 +341,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .ptag,.carousel .slide .ptag{bottom:0;left:0}
 .carousel .cap{bottom:44px}
 @media (max-width:700px){.carousel .cap{bottom:34px}}
+/* marquee: clickable titles, white on hover, pauses so they can be clicked */
+.marquee a{color:var(--bg);transition:color .2s}
+.marquee a:hover,.marquee a:focus-visible{color:#fff;outline:none}
+.marquee i{font-style:normal;margin:0 .35em}
+.marquee:hover .track,.marquee:focus-within .track{animation-play-state:paused}

@@ -127,8 +127,15 @@ def meta_line(p):
     return ' — '.join(bits)
 
 
+LAURELS = {'sel': LAUREL_SEL, 'act': LAUREL_ACT, 'rh': LAUREL_RH, 'fm': LAUREL_FM, 'lf10': LAUREL_LF10}
+
+
 def laurel_for(p):
-    return {'sel': LAUREL_SEL, 'act': LAUREL_ACT, 'rh': LAUREL_RH, 'fm': LAUREL_FM, 'lf10': LAUREL_LF10}.get(p.get('laurel'), '')
+    # one key -> single laurel; a list of keys -> stacked top to bottom, never overlapping
+    k = p.get('laurel')
+    if isinstance(k, (list, tuple)):
+        return '<div class="lstack">' + ''.join(LAURELS[x] for x in k) + '</div>'
+    return LAURELS.get(k, '')
 
 
 def page(p, nxt):

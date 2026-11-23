@@ -330,6 +330,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .about-a .stats span{display:block;margin-top:10px;font-size:11px;color:var(--dim)}
 @media (max-width:900px){.about.about-a{grid-template-columns:1fr;row-gap:36px}.about-a .headshot{max-width:420px}}
 @media (max-width:480px){.about-a .stats{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:16px}.about-a .stats span{font-size:9px}}
-.vgrid .player img.laurel.laurel-2{right:calc(30% + 20px)}
-.vgrid .player:has(.laurel-2) img.laurel{width:23%}
-.vgrid .player img.laurel.laurel-2{right:calc(23% + 18px)}
+
+/* multiple laurels: stacked top to bottom, never overlapping */
+.lstack{position:absolute;z-index:2;display:flex;flex-direction:column;align-items:stretch;gap:clamp(8px,1vw,14px);pointer-events:none;top:clamp(12px,2vw,28px);right:clamp(12px,2vw,28px);width:clamp(100px,14vw,200px);filter:drop-shadow(0 0 14px rgba(0,0,0,.55))}
+.lstack img.laurel{position:static!important;inset:auto!important;width:100%!important;height:auto!important;max-width:none;transform:none!important;filter:none!important;object-fit:contain!important;opacity:1!important}
+.card .frame .lstack{width:clamp(90px,26%,150px);top:14px;right:14px}
+.fstill .lstack{width:clamp(90px,22%,180px)}
+.vgrid .player .lstack{top:auto;bottom:12px;right:12px;width:24%}

@@ -168,6 +168,61 @@
     start();
   }
 
+  // Shorts page: rotating featured short. #slug in the URL features that short (and stops rotation).
+  var stage = document.querySelector('.shorts-stage');
+  if (stage) {
+    var sl = [].slice.call(stage.querySelectorAll('.sslide'));
+    var th = [].slice.call(stage.querySelectorAll('.sthumb'));
+    var DUR = 8000, idx = 0, tmr = null, hold = false, stopped = false;
+    stage.style.setProperty('--sdur', DUR + 'ms');
+    var still2 = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    sl.forEach(function (s) { var p = s.querySelector('.player'); if (p) p._orig = p.innerHTML; });
+    var reset = function (s) {
+      var p = s.querySelector('.player');
+      if (p && p.classList.contains('live')) { p.innerHTML = p._orig; p.classList.remove('live'); }
+    };
+    var show = function (i) {
+      i = (i + sl.length) % sl.length;
+      if (i !== idx) reset(sl[idx]);
+      sl.forEach(function (s, k) {
+        var on = k === i; s.classList.toggle('on', on);
+        if (on) s.removeAttribute('aria-hidden'); else s.setAttribute('aria-hidden', 'true');
+        var b = s.querySelector('.player > button'); if (b) { if (on) b.removeAttribute('tabindex'); else b.setAttribute('tabindex', '-1'); }
+        s.querySelectorAll('img[loading="lazy"]').forEach(function (im) { if (on) im.loading = 'eager'; });
+      });
+      th.forEach(function (t, k) {
+        var on = k === i; t.classList.toggle('on', on);
+        if (on) t.setAttribute('aria-current', 'true'); else t.removeAttribute('aria-current');
+        if (on) { var bar = t.querySelector('.tbar i'); bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = ''; }
+      });
+      idx = i;
+    };
+    var stop = function () { stopped = true; clearInterval(tmr); stage.classList.remove('running'); };
+    var start = function () {
+      if (still2 || stopped) return;
+      stage.classList.add('running');
+      clearInterval(tmr);
+      tmr = setInterval(function () { if (!hold && !document.hidden) show(idx + 1); }, DUR);
+    };
+    stage.addEventListener('mouseenter', function () { hold = true; stage.classList.add('hold'); });
+    stage.addEventListener('mouseleave', function () { hold = false; stage.classList.remove('hold'); });
+    th.forEach(function (t, k) { t.addEventListener('click', function () { stop(); show(k); }); });
+    sl.forEach(function (s) { var p = s.querySelector('.player'); if (p) p.addEventListener('click', stop, true); });
+    var pick = function () {
+      var slug = (location.hash || '').slice(1);
+      var k = sl.findIndex ? sl.findIndex(function (s) { return s.getAttribute('data-slug') === slug; }) : -1;
+      if (k > -1) {
+        stop(); show(k);
+        var top = stage.getBoundingClientRect().top + window.pageYOffset - 100;
+        window.scrollTo(0, Math.max(0, top));
+        return true;
+      }
+      return false;
+    };
+    window.addEventListener('hashchange', pick);
+    if (!pick()) start();
+  }
+
   // Click-to-play embeds: nothing loads from YouTube or Vimeo until someone presses play.
   function mount(player, html) {
     player.innerHTML = html;

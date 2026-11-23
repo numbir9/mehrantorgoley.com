@@ -235,7 +235,7 @@
       fs.setAttribute('href', d.href);
       var honors = d.honors.length ? '<ul class="laurels mono">' + d.honors.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' : '';
       fs.querySelector('.frame').innerHTML = '<img src="' + d.img + '" alt="' + d.alt + '" loading="lazy" style="object-position:' + d.pos + '">' + d.laurel + '<span class="ptag">' + d.tag + '</span>';
-      fs.querySelector('.txt').innerHTML = '<span class="mono" style="font-size:13px;color:var(--dim)">Featured — ' + d.meta + '</span>' +
+      fs.querySelector('.txt').innerHTML = '<span class="mono" style="font-size:13px;color:var(--dim)">' + d.meta + '</span>' +
         '<span class="ttl display">' + d.title + '</span>' + (d.log ? '<p>' + d.log + '</p>' : '') + honors +
         '<span class="mono" style="font-size:13px;color:var(--accent)">' + d.cta + ' →</span>';
     } catch (e) {}

@@ -72,6 +72,43 @@
     });
   });
 
+  // Contact form: send via FormSubmit without leaving the page.
+  var form = document.getElementById('cform');
+  if (form) {
+    var status = form.querySelector('.form-status');
+    var done = function () {
+      form.innerHTML = '<div class="sent wide"><p class="display">Sent.</p><p>Thanks — I’ll get back to you soon.</p></div>';
+    };
+    if (/[?&]sent=1/.test(location.search)) done();
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (form._honey && form._honey.value) return;
+      var bad = [].filter.call(form.querySelectorAll('[required]'), function (f) { return !f.value.trim() || (f.type === 'email' && !/^\S+@\S+\.\S+$/.test(f.value)); });
+      form.querySelectorAll('.field').forEach(function (f) { f.classList.remove('err'); });
+      if (bad.length) {
+        bad.forEach(function (f) { f.closest('.field').classList.add('err'); });
+        status.textContent = 'Please fill in your name, a valid email and a message.';
+        bad[0].focus();
+        return;
+      }
+      var btn = form.querySelector('button[type=submit]');
+      btn.disabled = true; status.textContent = 'Sending…';
+      var data = {};
+      new FormData(form).forEach(function (v, k) { data[k] = v; });
+      data._replyto = data.email;
+      fetch('https://formsubmit.co/ajax/hello@mehrantorgoley.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(function (r) { return r.json().then(function (j) { if (!r.ok || String(j.success) !== 'true') throw j; }); })
+        .then(done)
+        .catch(function () {
+          btn.disabled = false;
+          status.innerHTML = 'That didn’t go through. Please use <a class="mail" href="mailto:hello@mehrantorgoley.com">email</a> instead.';
+        });
+    });
+  }
+
   // Click-to-play embeds: nothing loads from YouTube or Vimeo until someone presses play.
   function mount(player, html) {
     player.innerHTML = html;

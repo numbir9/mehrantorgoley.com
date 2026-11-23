@@ -126,6 +126,48 @@
     pm.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
   }
 
+  // Homepage carousel: crossfade, autoplay (paused on hover/focus/hidden tab), arrows, keys, swipe.
+  var car = document.querySelector('.carousel');
+  if (car) {
+    var slides = [].slice.call(car.querySelectorAll('.slide'));
+    var capT = car.querySelector('.cap-t'), count = car.querySelector('.ccount');
+    var cur = 0, timer = null, paused = false, n = slides.length;
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var pad = function (x) { return (x < 10 ? '0' : '') + x; };
+    var go = function (i) {
+      slides[cur].classList.remove('on'); slides[cur].setAttribute('tabindex', '-1');
+      cur = (i + n) % n;
+      var s = slides[cur], img = s.querySelector('img');
+      if (img && img.loading === 'lazy') img.loading = 'eager';
+      s.classList.add('on'); s.removeAttribute('tabindex');
+      capT.textContent = s.getAttribute('data-cap');
+      count.textContent = pad(cur + 1) + ' / ' + pad(n);
+      var nx = slides[(cur + 1) % n].querySelector('img'); if (nx) nx.loading = 'eager';
+    };
+    var tick = function () { if (!paused && !document.hidden) go(cur + 1); };
+    var start = function () { if (!still && n > 1) { clearInterval(timer); timer = setInterval(tick, 5500); } };
+    car.querySelector('.cnext').addEventListener('click', function (e) { e.preventDefault(); go(cur + 1); start(); });
+    car.querySelector('.cprev').addEventListener('click', function (e) { e.preventDefault(); go(cur - 1); start(); });
+    car.addEventListener('mouseenter', function () { paused = true; });
+    car.addEventListener('mouseleave', function () { paused = false; });
+    car.addEventListener('focusin', function () { paused = true; });
+    car.addEventListener('focusout', function () { paused = false; });
+    car.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { go(cur + 1); start(); slides[cur].focus(); }
+      if (e.key === 'ArrowLeft') { go(cur - 1); start(); slides[cur].focus(); }
+    });
+    var x0 = null, moved = false;
+    car.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; moved = false; }, { passive: true });
+    car.addEventListener('touchmove', function (e) { if (x0 !== null && Math.abs(e.touches[0].clientX - x0) > 10) moved = true; }, { passive: true });
+    car.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) { go(cur + (dx < 0 ? 1 : -1)); start(); }
+    });
+    slides.forEach(function (s) { s.addEventListener('click', function (e) { if (moved) { e.preventDefault(); moved = false; } }); });
+    start();
+  }
+
   // Click-to-play embeds: nothing loads from YouTube or Vimeo until someone presses play.
   function mount(player, html) {
     player.innerHTML = html;

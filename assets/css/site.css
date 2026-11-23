@@ -224,3 +224,57 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .picker-menu a,.picker-menu button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:14px 18px;font:inherit;font-size:15px;color:var(--ink);background:none;border:0;cursor:pointer;text-align:left}
 .picker-menu a:hover,.picker-menu button:hover{background:#1a1a1a;color:var(--accent)}
 .picker-menu span{color:var(--dim)}
+
+/* homepage carousel */
+.carousel .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.1s ease;z-index:0}
+.carousel .slide.on{opacity:1;z-index:1}
+.carousel .slide img:not(.laurel){transition:transform 6s ease-out}
+.carousel .slide.on img:not(.laurel){transform:scale(1.03)}
+.carousel .slide:hover img:not(.laurel){transform:scale(1.05);transition-duration:1.2s}
+.carousel .scan{z-index:2;pointer-events:none}
+.carousel .cap{z-index:3;align-items:center;pointer-events:none}
+.carousel .cnav{display:flex;align-items:center;gap:14px;pointer-events:auto}
+.carousel .cnav button{background:none;border:1px solid rgba(242,240,235,.35);color:var(--ink);width:36px;height:36px;font-size:15px;cursor:pointer;transition:background .2s,border-color .2s}
+.carousel .cnav button:hover{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.carousel .ccount{min-width:5.5ch;text-align:center}
+.carousel .cap-t{text-shadow:0 1px 8px rgba(0,0,0,.6)}
+@media (max-width:700px){.carousel .cap{flex-direction:row;align-items:flex-end;justify-content:space-between}.carousel .cnav{gap:8px}.carousel .cnav button{width:30px;height:30px}}
+@media (prefers-reduced-motion:reduce){.carousel .slide,.carousel .slide img{transition:none!important;transform:none!important}}
+
+/* project pages */
+.project-head h1{font-size:clamp(64px,10vw,150px)}
+.project-player{aspect-ratio:16/9}
+.player img{object-fit:cover}
+.vlabel{margin:12px 0 0;font-size:12px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase}
+.project-still,.project-gallery{position:relative;margin:0;aspect-ratio:2.39/1;overflow:hidden;background:var(--panel)}
+.project-still img:not(.laurel),.project-gallery img:not(.laurel){width:100%;height:100%;object-fit:cover}
+.project-gallery{aspect-ratio:2/1;margin-top:24px}
+.project-still img.laurel,.project-gallery img.laurel{position:absolute;height:auto;pointer-events:none;top:clamp(14px,3vw,36px);right:clamp(14px,3vw,36px);width:clamp(100px,14vw,210px);filter:drop-shadow(0 0 14px rgba(0,0,0,.55))}
+.project-gallery img.laurel-award{width:clamp(96px,13vw,190px)}
+.project-body{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:clamp(40px,6vw,96px);margin-top:clamp(40px,5vw,72px);align-items:start}
+.project-info .logline{margin:0 0 28px;font-size:clamp(20px,1.8vw,26px);line-height:1.45;color:var(--ink)}
+.project-info .credit{margin:0;font-size:13px;line-height:1.8;color:var(--mute)}
+.project-info .laurels{margin-top:28px}
+.project-info .status{margin-top:24px;font-size:13px;color:var(--accent)}
+.watch h2{margin:0 0 16px;font-size:12px;font-weight:500;color:var(--dim);letter-spacing:.12em;text-transform:uppercase}
+.watch ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.watch li{border-bottom:1px solid var(--line)}
+.watch a{display:grid;grid-template-columns:28px 1fr auto;grid-template-rows:auto auto;column-gap:14px;align-items:center;padding:14px 4px;color:var(--ink);transition:background .2s,color .2s}
+.watch a:hover{background:#151515;color:var(--accent)}
+.watch .wicon{grid-row:1/3;width:24px;height:24px}
+.watch .wname{font-size:16px;font-weight:500}
+.watch .wnote{grid-column:2;font-size:11px;color:var(--dim);letter-spacing:.06em}
+.watch .warr{grid-column:3;grid-row:1/3;color:var(--dim)}
+.watch .empty{font-size:13px;color:var(--mute)}
+.next-project{margin-top:clamp(64px,8vw,120px)}
+.next-project a{display:flex;flex-direction:column;gap:10px;padding-top:28px;border-top:1px solid var(--line)}
+.next-project .mono{font-size:12px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase}
+.next-project .display{font-size:clamp(44px,6vw,88px)}
+.next-project .arrow{color:var(--accent)}
+.next-project a:hover .display{color:var(--accent)}
+@media (max-width:900px){.project-body{grid-template-columns:1fr}}
+@media (max-width:700px){.project-still{aspect-ratio:16/10}}
+.carousel::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(to top,rgba(0,0,0,.55),transparent);z-index:2;pointer-events:none}
+.carousel .ccount{white-space:nowrap}
+.carousel .cap-t{flex:1;min-width:0}
+@media (max-width:700px){.carousel .cap{gap:12px}.carousel .cap-t{font-size:10px;line-height:1.5}.carousel .ccount{font-size:10px;min-width:auto}}

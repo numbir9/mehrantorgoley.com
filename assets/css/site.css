@@ -337,3 +337,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .card .frame .lstack{width:clamp(90px,26%,150px);top:14px;right:14px}
 .fstill .lstack{width:clamp(90px,22%,180px)}
 .vgrid .player .lstack{top:auto;bottom:12px;right:12px;width:24%}
+/* type tag: flush to the bottom-left corner */
+.ptag,.carousel .slide .ptag{bottom:0;left:0}
+.carousel .cap{bottom:44px}
+@media (max-width:700px){.carousel .cap{bottom:34px}}

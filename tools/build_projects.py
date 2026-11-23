@@ -10,6 +10,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ICONS = json.load(open(os.path.join(ROOT, 'tools', 'icons.json')))
 
 LAUREL_SEL = '<img class="laurel" src="/assets/img/laurel-nyciff-2026.png" alt="Official Selection, New York City Independent Film Festival 2026" width="800" height="518">'
+LAUREL_RH = '<img class="laurel laurel-rh" src="/assets/img/laurel-ravenheart-2022.png" alt="Official Selection, Ravenheart International Film Festival 2022" width="600" height="351">'
 LAUREL_ACT = '<img class="laurel laurel-award" src="/assets/img/laurel-nyciff-2026-best-actress.png" alt="Winner, Best Actress — Leah Eckardt, New York City Independent Film Festival 2026" width="401" height="348">'
 
 # watch: (label, icon key, url, note)
@@ -26,11 +27,13 @@ PROJECTS = [
          gallery=[('golden-leah.jpg', 'Leah Eckardt in Golden', 'act')],
          watch=[]),
     dict(slug='curse-of-aurore', title='Curse of Aurore', kind='Feature', year='2020',
-         still='curse-of-aurore.jpg', pos='50% 50%',
+         still='curse-of-aurore.jpg', pos='50% 50%', laurel='rh',
          alt='Curse of Aurore — a figure bends over a body on an icy road at night',
          logline='A thumb drive from the dark web holds the last footage of three American filmmakers who went to rural Quebec to research a century-old child murder.',
          credit='Directed by Mehran C. Torgoley · Found-footage horror · Freestyle Digital Media',
-         honors=['Opened #1 at Cinémas Guzzo, Quebec'],
+         honors=['Official Selection — Ravenheart International Film Festival 2022',
+                 'Winner — Best Actress, Llana Barron',
+                 'Opened #1 at Cinémas Guzzo, Quebec'],
          video=('yt', '_koawiiqMwI'), video_label='Official trailer',
          watch=[('Prime Video', 'generic', 'https://watch.amazon.com/detail?gti=amzn1.dv.gti.42bb2662-0fc9-f78a-24e5-07cf8e0f9942', 'Included with Prime · rent or buy'),
                 ('Tubi', 'tubi', 'https://tubitv.com/movies/618715', 'Free with ads'),
@@ -107,7 +110,7 @@ def meta_line(p):
 
 
 def laurel_for(p):
-    return {'sel': LAUREL_SEL, 'act': LAUREL_ACT}.get(p.get('laurel'), '')
+    return {'sel': LAUREL_SEL, 'act': LAUREL_ACT, 'rh': LAUREL_RH}.get(p.get('laurel'), '')
 
 
 def page(p, nxt):

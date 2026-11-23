@@ -280,3 +280,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 @media (max-width:700px){.carousel .cap{gap:12px}.carousel .cap-t{font-size:10px;line-height:1.5}.carousel .ccount{font-size:10px;min-width:auto}}
 .player img.laurel{inset:auto;top:clamp(14px,3vw,36px);right:clamp(14px,3vw,36px);width:clamp(100px,14vw,210px);height:auto;object-fit:contain;opacity:1;transform:none;pointer-events:none;filter:drop-shadow(0 0 14px rgba(0,0,0,.55))}
 .player:hover img.laurel{opacity:1;transform:none}
+
+/* about headshot */
+.about .about-side{grid-column:span 5}
+.about .about-side h2{margin:0}
+.headshot{margin:clamp(28px,3vw,40px) 0 0;max-width:420px;aspect-ratio:4/5;overflow:hidden;background:var(--panel)}
+.headshot img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+@media (max-width:900px){.about .about-side{grid-column:1/-1}.headshot{max-width:360px}}

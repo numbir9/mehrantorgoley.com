@@ -175,3 +175,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 /* email copied toast */
 .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:14px 20px;font-size:12px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:20;max-width:calc(100vw - 32px)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* festival laurels on stills */
+.reel img.laurel,.card .frame img.laurel{position:absolute;inset:auto;left:auto;bottom:auto;height:auto;object-fit:contain;transform:none;transition:none;pointer-events:none;filter:drop-shadow(0 0 14px rgba(0,0,0,.55))}
+.reel img.laurel{top:clamp(16px,3vw,40px);right:clamp(16px,3vw,40px);width:clamp(110px,14vw,220px)}
+.card .frame{position:relative}
+.card .frame img.laurel{top:14px;right:14px;width:clamp(96px,28%,150px)}
+.card:hover .frame img.laurel{transform:none}
+@media (max-width:700px){.reel img.laurel{width:96px;top:14px;right:14px}}

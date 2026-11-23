@@ -247,7 +247,7 @@ def carousel():
 
 def features_page():
     feats = [p for p in PROJECTS if p['kind'] == 'Feature']
-    order = ['curse-of-aurore', 'izzy-lyon', 'golden']
+    order = ['golden', 'curse-of-aurore', 'izzy-lyon']
     feats.sort(key=lambda p: order.index(p['slug']) if p['slug'] in order else 99)
     rows = []
     for i, p in enumerate(feats):

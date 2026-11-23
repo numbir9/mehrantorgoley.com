@@ -138,6 +138,13 @@ def laurel_for(p):
     return LAURELS.get(k, '')
 
 
+def seo_title(p):
+    if p['kind'] == 'Music video':
+        return f"{p['title']} — {p.get('artist', '')} Music Video | Directed by Mehran C. Torgoley"
+    label = 'Feature Film' if p['kind'] == 'Feature' else 'Short Film'
+    return f"{p['title']} ({p['year']}) — {label} | Directed by Mehran C. Torgoley"
+
+
 def page(p, nxt):
     t = E(p['title'])
     player = ''
@@ -175,10 +182,10 @@ def page(p, nxt):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{t} — Mehran C. Torgoley</title>
+<title>{E(seo_title(p))}</title>
 <meta name="description" content="{E(desc)}">
 <link rel="canonical" href="https://mehrantorgoley.com/work/{p['slug']}/">
-<meta property="og:title" content="{t} — Mehran C. Torgoley">
+<meta property="og:title" content="{E(seo_title(p))}">
 <meta property="og:image" content="{og}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0B0B0B">
@@ -288,7 +295,7 @@ def features_page():
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Feature Films — Mehran C. Torgoley</title>
+<title>Feature Films — Golden, Curse of Aurore, Izzy Lyon | Mehran C. Torgoley</title>
 <meta name="description" content="Feature films directed by Mehran C. Torgoley: Curse of Aurore, Izzy Lyon: The Unspun Truth and Golden.">
 <link rel="canonical" href="https://mehrantorgoley.com/features/">
 <meta property="og:title" content="Feature Films — Mehran C. Torgoley">
@@ -347,6 +354,8 @@ def main():
     assert s2 != s or 'class="reel carousel"' in s, 'carousel anchor not found'
     open(idx, 'w').write(s2)
     print('built', len(PROJECTS), 'project pages + carousel')
+    import seo
+    seo.main()
 
 
 if __name__ == '__main__':

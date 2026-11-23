@@ -278,3 +278,5 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .carousel .ccount{white-space:nowrap}
 .carousel .cap-t{flex:1;min-width:0}
 @media (max-width:700px){.carousel .cap{gap:12px}.carousel .cap-t{font-size:10px;line-height:1.5}.carousel .ccount{font-size:10px;min-width:auto}}
+.player img.laurel{inset:auto;top:clamp(14px,3vw,36px);right:clamp(14px,3vw,36px);width:clamp(100px,14vw,210px);height:auto;object-fit:contain;opacity:1;transform:none;pointer-events:none;filter:drop-shadow(0 0 14px rgba(0,0,0,.55))}
+.player:hover img.laurel{opacity:1;transform:none}

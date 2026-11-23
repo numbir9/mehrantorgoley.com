@@ -21,7 +21,7 @@ PROJECTS = [
          credit='Directed by Mehran C. Torgoley',
          honors=['Official Selection — NYC Independent Film Festival 2026',
                  'Winner — Best Actress in a Narrative Feature, Leah Eckardt'],
-         video=None, video_label=None,
+         video=('yt', 'GkRgk2qgmxU'), video_label='Official trailer',
          status='Now on the festival circuit. Distribution to be announced.',
          gallery=[('golden-leah.jpg', 'Leah Eckardt in Golden', 'act')],
          watch=[]),
@@ -118,7 +118,7 @@ def page(p, nxt):
         attr = f'data-yt="{ref}"' if kind == 'yt' else f'data-vimeo="{ref}"'
         player = (f'<div class="player project-player" {attr} data-title="{t}">'
                   f'<button aria-label="Play {t} — {E(p["video_label"])}">'
-                  f'<img src="/assets/img/{p["still"]}" alt="" style="object-position:{p["pos"]}">{PLAY}</button></div>'
+                  f'<img src="/assets/img/{p["still"]}" alt="" style="object-position:{p["pos"]}">{laurel_for(p)}{PLAY}</button></div>'
                   f'<p class="mono vlabel">{E(p["video_label"])}</p>')
     else:
         player = (f'<div class="project-still"><img src="/assets/img/{p["still"]}" alt="{E(p["alt"])}" style="object-position:{p["pos"]}">'

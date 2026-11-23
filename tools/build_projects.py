@@ -113,6 +113,13 @@ def nav(p=None, current=None):
     return ''.join(f'<a href="{h}"{" aria-current=\"page\"" if h == cur else ""}>{t}</a>' for h, t in links)
 
 
+TAGS = {'Feature': 'Feature Film', 'Short film': 'Short Film', 'Music video': 'Music Video'}
+
+
+def tag(p):
+    return f'<span class="ptag">{TAGS.get(p["kind"], p["kind"])}</span>'
+
+
 def meta_line(p):
     bits = [p['kind']]
     if p.get('artist'): bits.append(p['artist'])
@@ -132,11 +139,11 @@ def page(p, nxt):
         attr = f'data-yt="{ref}"' if kind == 'yt' else f'data-vimeo="{ref}"'
         player = (f'<div class="player project-player" {attr} data-title="{t}">'
                   f'<button aria-label="Play {t} — {E(p["video_label"])}">'
-                  f'<img src="/assets/img/{p["still"]}" alt="" style="object-position:{p["pos"]}">{laurel_for(p)}{PLAY}</button></div>'
+                  f'<img src="/assets/img/{p["still"]}" alt="" style="object-position:{p["pos"]}">{laurel_for(p)}{tag(p)}{PLAY}</button></div>'
                   f'<p class="mono vlabel">{E(p["video_label"])}</p>')
     else:
         player = (f'<div class="project-still"><img src="/assets/img/{p["still"]}" alt="{E(p["alt"])}" style="object-position:{p["pos"]}">'
-                  f'{laurel_for(p)}</div>')
+                  f'{laurel_for(p)}{tag(p)}</div>')
     gallery = ''
     for img, alt, lau in p.get('gallery', []):
         lt = LAUREL_ACT if lau == 'act' else LAUREL_SEL if lau == 'sel' else ''
@@ -227,11 +234,11 @@ def page(p, nxt):
 def carousel():
     slides = []
     for i, p in enumerate(PROJECTS[:9]):
-        cap = ' — '.join(x for x in [p.get('short', p['title']), p.get('artist') or p['kind'], p.get('year')] if x)
+        cap = ' — '.join(x for x in [p.get('short', p['title']), p.get('artist'), p.get('year')] if x)
         load = 'fetchpriority="high"' if i == 0 else 'loading="lazy"'
         slides.append(
             f'    <a class="slide{" on" if i == 0 else ""}" href="/work/{p["slug"]}/" data-cap="{E(cap)}" aria-label="{E(p["title"])} — view project"{"" if i == 0 else " tabindex=\"-1\""}>'
-            f'<img src="/assets/img/{p["still"]}" alt="{E(p["alt"])}" {load} style="object-position:{p["pos"]}">{laurel_for(p)}</a>')
+            f'<img src="/assets/img/{p["still"]}" alt="{E(p["alt"])}" {load} style="object-position:{p["pos"]}">{laurel_for(p)}{tag(p)}</a>')
     n = len(slides)
     first_cap = re.search(r'data-cap="([^"]*)"', slides[0]).group(1)
     return ('  <div class="reel carousel" aria-roledescription="carousel" aria-label="Selected projects">\n'
@@ -257,7 +264,7 @@ def features_page():
         wl = ' · '.join(n for n, *_ in p['watch'][:4])
         where = f'<p class="fwhere mono">Streaming on {E(wl)}</p>' if wl else (f'<p class="fwhere mono">{E(p["status"])}</p>' if p.get('status') else '')
         rows.append(f'''    <article class="feature-row reveal">
-      <a class="fstill" href="/work/{p['slug']}/" aria-label="{E(p['title'])}"><img src="/assets/img/{p['still']}" alt="{E(p['alt'])}" loading="{'eager' if i == 0 else 'lazy'}" style="object-position:{p['pos']}">{laurel_for(p)}</a>
+      <a class="fstill" href="/work/{p['slug']}/" aria-label="{E(p['title'])}"><img src="/assets/img/{p['still']}" alt="{E(p['alt'])}" loading="{'eager' if i == 0 else 'lazy'}" style="object-position:{p['pos']}">{laurel_for(p)}{tag(p)}</a>
       <div class="ftext">
         <span class="mono fnum">{i + 1:02d} — {E(p['year'])}</span>
         <h2 class="display"><a href="/work/{p['slug']}/">{E(p['title']).replace(': ', ':<br>')}</a></h2>
